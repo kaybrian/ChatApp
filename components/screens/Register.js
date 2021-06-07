@@ -1,6 +1,7 @@
 import React,{useState,useLayoutEffect} from 'react';
 import { View,StyleSheet,KeyboardAvoidingView } from 'react-native';
 import {Button,Input,Image,Text} from 'react-native-elements';
+import { auth } from '../../firebase';
  
 
 const RegisterScreen = ({navigation}) => {
@@ -16,7 +17,14 @@ const RegisterScreen = ({navigation}) => {
     const [password,setPassword] = useState('');
     const [imageUrl,setImageUrl] = useState('');
 
-    const register = () => {};
+    const register = () => {
+        auth.createUserWithEmailAndPassword(email,password)
+        .then(authUser => {
+
+        }).catch(
+
+        )
+    };
     
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -36,7 +44,7 @@ const RegisterScreen = ({navigation}) => {
                     onChangeText={(text) => setEmail(text)}
                 />
                 <Input 
-                    placeholder="Full name" 
+                    placeholder="Password" 
                     type="password" 
                     secureTextEntry
                     value={password} 
