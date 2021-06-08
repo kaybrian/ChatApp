@@ -1,6 +1,6 @@
 import React,{useState,useLayoutEffect} from 'react';
 import { View,StyleSheet,KeyboardAvoidingView } from 'react-native';
-import {Button,Input,Image,Text} from 'react-native-elements';
+import {Button,Input,Text} from 'react-native-elements';
 import { auth } from '../../firebase';
  
 
@@ -20,14 +20,19 @@ const RegisterScreen = ({navigation}) => {
     const register = () => {
         auth.createUserWithEmailAndPassword(email,password)
         .then(authUser => {
-
+            authUser.user.updateProfile({
+                displayName:name,
+                photoURL:imageUrl || 'https://www.happoldfoundation.org/wp-content/uploads/2016/09/man-placeholder.jpg'
+            });
         }).catch(
-
+            (error) => alert(error.message)
         )
     };
     
     return (
+        
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            
             <Text h4 style={styles.header}>Create Account </Text>
 
             <View style={styles.InputContainer}>
